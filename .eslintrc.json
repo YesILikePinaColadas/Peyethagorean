@@ -1,0 +1,127 @@
+// A separate eslint.config.js is also possible.
+// By using javascript, using the version above as the config file allows for more flexibility in setting up even dynamic changes.
+// In most caes the eslintrc.json is simpler and better.
+
+// Prettier mostly enforces style. Specific forms of wrapping, spacing, indenting and so on.
+// ESLint can perform more complex linting such as: Check for propper casing by type and so on.
+{ 
+    "env": {
+        "node": true,
+        "es2021": true,
+        "browser": true
+    }, 
+    // env: specifies the environments eslint should expect.
+    // Works by setting values to true or false.
+    // Setting, for instance, browser to true, will prepare the linter to expect values such as window.
+
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    // Sometikmes, in order to extend from a specific package, importing it in plugin will be necessary
+
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    // Extends the rule set used by the linter. The settings are cummulative so one can be used on top of another.
+    // Extnends gives priority from bottom up. That is, files below will override conflicing settings above it.
+
+    "ignorePatterns": [
+      ".env"
+    ],
+    // Two options are possible: A eslintignore file, or ignorePatterns. The second one is cleaner and modern.
+
+    "parser": "@typescript-eslint/parser",
+    // Transforms the code into a abstract syntax tree (AST). This makes it easier o enforce ESLint rules.
+
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+            // Enables parsing jsx.
+        },
+        "ecmaVersion": 12,
+        // ecma stands for European Compute Manufacturers Association. They realease standards on Javascript and define versions. 
+        "sourceType": "module",
+        // Can only be module or script. Module is what extends functionality for imports and exports, so this one. (didn't fully understand this)
+        "project": "./tsconfig.json"
+        // Necessary to point to the tsconfig.json file. This setting is used specifically for typescript.
+    },
+    "rules": {
+      "camelcase": "off",
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "default",
+          "format": [
+            "camelCase"
+          ]
+        },
+        {
+          "selector": "variable",
+          "format": [
+            "camelCase",
+            "PascalCase"
+          ],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "parameter",
+          "format": [
+            "camelCase"
+          ],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "memberLike",
+          "modifiers": [     
+            "private"
+          ],
+          "format": [
+            "camelCase"
+          ],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "function",
+          "format": [
+            "camelCase"
+          ]
+        },
+        {
+          "selector": "method",
+          "format": [
+            "camelCase"
+          ]
+        },
+        {
+          "selector": "property",
+          "format": [],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "typeLike",
+          "format": [
+            "PascalCase"
+          ]
+        },
+        {
+          "selector": "class",
+          "format": [
+            "PascalCase"
+          ]
+        }
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 120,
+          "singleQuote": false,
+          "semi": true,
+          "useTabs": true
+        }
+      ]
+    }
+    // Copied these rules directly from the lookingup ones. Don't understand all of them exactly.
+}

@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+    <queryresult success='true'
+        error='false'
+        xml:space='preserve'
+        numpods='4'
+        datatypes='Solve'
+        timedout=''
+        timedoutpods=''
+        timing='0.885'
+        parsetiming='0.34700000000000003'
+        parsetimedout='false'
+        recalculate=''
+        id='MSP4205229ebf161aib28ab0000620gddb1e0b7196i'
+        host='https://www6b3.wolframalpha.com'
+        server='15'
+        related='https://www6b3.wolframalpha.com/api/v1/relatedQueries.jsp?id=MSPa4206229ebf161aib28ab00001289i05h1c9655b18884920455003441207'
+        version='2.6'
+        inputstring='solve 3x-7=11'>
+     <pod title='Input interpretation'
+         scanner='Identity'
+         id='Input'
+         position='100'
+         error='false'
+         numsubpods='1'>
+      <subpod title=''>
+       <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP4207229ebf161aib28ab000033b92f276b80i092?MSPStoreType=image/gif&amp;s=15'
+           alt='solve 3 x - 7 = 11'
+           title='solve 3 x - 7 = 11'
+           width='170'
+           height='33'
+           type='Grid'
+           themes='1,2,3,4,5,6,7,8,9,10,11,12'
+           colorinvertable='true'
+           contenttype='image/gif' />
+       <plaintext>solve 3 x - 7 = 11</plaintext>
+      </subpod>
+      <expressiontypes count='1'>
+       <expressiontype name='Default' />
+      </expressiontypes>
+     </pod>
+     <pod title='Results'
+         scanner='Solve'
+         id='Result'
+         position='200'
+         error='false'
+         numsubpods='2'
+         primary='true'>
+      <subpod title=''>
+       <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP4208229ebf161aib28ab00002g7aa5h1b97e698g?MSPStoreType=image/gif&amp;s=15'
+           alt='x = 6'
+           title='x = 6'
+           width='37'
+           height='19'
+           type='Default'
+           themes='1,2,3,4,5,6,7,8,9,10,11,12'
+           colorinvertable='true'
+           contenttype='image/gif' />
+       <plaintext>x = 6</plaintext>
+      </subpod>
+      <subpod title='Possible intermediate steps'>
+       <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP4209229ebf161aib28ab00004ic1612fb9hf5g5b?MSPStoreType=image/gif&amp;s=15'
+           alt='Solve for x:
+    3 x - 7 = 11
+    Add 7 to both sides:
+    3 x + (7 - 7) = 7 + 11
+    7 - 7 = 0:
+    3 x = 11 + 7
+    11 + 7 = 18:
+    3 x = 18
+    Divide both sides of 3 x = 18 by 3:
+    (3 x)/3 = 18/3
+    3/3 = 1:
+    x = 18/3
+    The gcd of 18 and 3 is 3, so 18/3 = (3×6)/(3×1) = 3/3×6 = 6:
+    Answer: | 
+     | x = 6'
+           title='Solve for x:
+    3 x - 7 = 11
+    Add 7 to both sides:
+    3 x + (7 - 7) = 7 + 11
+    7 - 7 = 0:
+    3 x = 11 + 7
+    11 + 7 = 18:
+    3 x = 18
+    Divide both sides of 3 x = 18 by 3:
+    (3 x)/3 = 18/3
+    3/3 = 1:
+    x = 18/3
+    The gcd of 18 and 3 is 3, so 18/3 = (3×6)/(3×1) = 3/3×6 = 6:
+    Answer: | 
+     | x = 6'
+           width='340'
+           height='652'
+           type='Default'
+           themes='1,2,3,4,5,6,7,8,9,10,11,12'
+           colorinvertable='true'
+           contenttype='image/gif' />
+       <plaintext>Solve for x:
+    3 x - 7 = 11
+    Add 7 to both sides:
+    3 x + (7 - 7) = 7 + 11
+    7 - 7 = 0:
+    3 x = 11 + 7
+    11 + 7 = 18:
+    3 x = 18
+    Divide both sides of 3 x = 18 by 3:
+    (3 x)/3 = 18/3
+    3/3 = 1:
+    x = 18/3
+    The gcd of 18 and 3 is 3, so 18/3 = (3×6)/(3×1) = 3/3×6 = 6:
+    Answer: | 
+     | x = 6</plaintext>
+      </subpod>
+      <expressiontypes count='2'>
+       <expressiontype name='Default' />
+       <expressiontype name='Default' />
+      </expressiontypes>
+      <states count='1'>
+       <state name='Hide steps'
+           input='Result__Hide steps' />
+      </states>
+     </pod>
+     <pod title='Plot'
+         scanner='Solve'
+         id='RootPlot'
+         position='300'
+         error='false'
+         numsubpods='1'>
+      <subpod title=''>
+       <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP4210229ebf161aib28ab000060572eg4c56ig661?MSPStoreType=image/gif&amp;s=15'
+           alt='Plot'
+           title=''
+           width='389'
+           height='206'
+           type='2DMathPlot_1'
+           themes='1,2,3,4,5,6,7,8,9,10,11,12'
+           colorinvertable='true'
+           contenttype='image/gif' />
+       <plaintext></plaintext>
+      </subpod>
+      <expressiontypes count='1'>
+       <expressiontype name='Default' />
+      </expressiontypes>
+     </pod>
+     <pod title='Number line'
+         scanner='Solve'
+         id='NumberLine'
+         position='400'
+         error='false'
+         numsubpods='1'>
+      <subpod title=''>
+       <img src='https://www6b3.wolframalpha.com/Calculate/MSP/MSP4211229ebf161aib28ab00000g1b2ieccbaa06ah?MSPStoreType=image/gif&amp;s=15'
+           alt='Number line'
+           title=''
+           width='330'
+           height='60'
+           type='1DMathPlot_1'
+           themes='1,2,3,4,5,6,7,8,9,10,11,12'
+           colorinvertable='true'
+           contenttype='image/gif' />
+       <plaintext></plaintext>
+      </subpod>
+      <expressiontypes count='1'>
+       <expressiontype name='Default' />
+      </expressiontypes>
+     </pod>
+    </queryresult>
