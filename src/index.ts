@@ -1,24 +1,21 @@
-console.log('Try npm run lint/fix!');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const longString =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut aliquet diam.';
+import express, { Express, Request, Response } from 'express';
+import { webRouter } from './router/web';
+import { SystemParameter } from "./system-parameter";
 
-const trailing = 'Semicolon';
+const app: Express = express();
+const port = Number(SystemParameter.getString("PORT"));
 
-const why = 'am I tabbed?';
+app.use(webRouter);
 
-export function doSomeStuff(
-  withThis: string,
-  andThat: string,
-  andThose: string[]
-) {
-  //function on one line
-  if (!andThose.length) {
-    return false;
-  }
-  console.log(withThis);
-  console.log(andThat);
-  console.dir(andThose);
-  return;
-}
-// TODO: more examples
+app.set("view engine", "ejs");
+
+app.get('/', (req, res) => {
+  res.send('Express + TypeScript Server');
+});
+
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});

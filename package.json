@@ -43,12 +43,13 @@
   },
   "scripts": {
     "lint": "eslint --ext=.ts",
+    "build": "npx tsc",
     "compile": "tsc",
     "prepare": "npm run compile",
-    "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "test": "jest",
-    "devStart": "nodemon server.js"
+    "start": "node build/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+    "test": "jest"
   },
   "dependencies": {
     "@azure/cognitiveservices-computervision": "^8.2.0",

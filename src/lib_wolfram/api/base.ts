@@ -5,7 +5,7 @@ import { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 import { get, QueryString } from "./request";
 import { URL } from "url";
 import { SystemParameter } from "../../system-parameter";
-import { DesiredAction } from "../models/parts/desired-action";
+import { DesiredAction } from "../models/parts/desired-action-types";
 
 type WolframApiConfig = {
     baseUrl: string;
@@ -72,7 +72,7 @@ export abstract class WolframApi {
      * @returns {string}
      */
     protected makeInputString(input: string, desiredAction: DesiredAction): string {
-        return `${desiredAction}${input}`;
+        return `${desiredAction}${encodeURIComponent(input).replace(/\+/g, "%2B").replace(/\(/g, "%28").replace(/\)/g, "%29")}`;
     };
 
     /**

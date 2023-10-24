@@ -3,6 +3,7 @@ import { isDefined } from "./utils";
 export const systemParameterName = [
     //env
     "ENV",
+    "PORT",
 
     // TEST
     "NODE_ENV",
