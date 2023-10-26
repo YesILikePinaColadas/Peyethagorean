@@ -16,7 +16,7 @@ export type HololensResponseObject = {
 }
 
 export default class PeyethagoreanController {
-    public static async partialController(req: any, res: any): Promise<void> {
+    public static async partialHandler(req: any, res: any): Promise<void> {
         const apiFull = new FullResultsApi();
         const processer = new DataProcesser();
 
@@ -31,7 +31,7 @@ export default class PeyethagoreanController {
         }
     }
 
-    public static async integralController(req: any, res: any): Promise<void> {
+    public static async integralHandler(req: any, res: any): Promise<void> {
         const apiFull = new FullResultsApi();
         const processer = new DataProcesser();
 

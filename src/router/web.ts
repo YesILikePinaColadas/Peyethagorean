@@ -6,7 +6,7 @@ import PeyethagoreanController from "../controller/peyethagorean-controller";
 export const webRouter = express.Router();
 
 // Desired actiond
-webRouter.get("/partial", PeyethagoreanController.partialController);
+webRouter.get("/partial", PeyethagoreanController.partialHandler);
 
-webRouter.get("/integral", PeyethagoreanController.integralController);
+webRouter.get("/integral", PeyethagoreanController.integralHandler);
 
