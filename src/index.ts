@@ -20,3 +20,12 @@ app.get('/', (req, res) => {
 app.listen(port, ip, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
+
+app.use((req, res) => {
+  res.status(404).send("Not Found");
+});
+
+app.use((err: any, req: express.Request, res: express.Response, next: any) => {
+  console.error(err.stack);
+  res.status(500).send("Internal Server Error");
+});
