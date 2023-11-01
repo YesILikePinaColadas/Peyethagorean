@@ -4,6 +4,8 @@ export const systemParameterName = [
     //env
     "ENV",
     "PORT",
+    "PUBLIC_IP",
+    "PRIVATE_IP",
 
     // TEST
     "NODE_ENV",
