@@ -1,5 +1,5 @@
-import { TargetPartial } from "../common";
-import { ErrorApiResponse, UnknownApiResponse } from "./api-response";
+import { TargetPartial } from "../common.js";
+import { ErrorApiResponse, UnknownApiResponse } from "./api-response.js";
 
 export type Error = {
     field: string;

@@ -1,7 +1,7 @@
 import { parseString } from "xml2js";
-import { WolframResponseObject } from "../models/parts/response-types";
-import { isDefined, isObject } from "../../utils";
-import { DesiredAction } from "../models/parts/desired-action-types";
+import { WolframResponseObject } from "../models/parts/response-types.js";
+import { isDefined, isObject } from "../../utils.js";
+import { DesiredAction } from "../models/parts/desired-action-types.js";
 
 export class DataProcesser {
     private xml: any;

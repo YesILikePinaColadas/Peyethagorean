@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import { SystemParameter } from "../../system-parameter";
+import { SystemParameter } from "../../system-parameter.js";
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { CognitiveServicesCredentials } from "@azure/ms-rest-azure-js";
 

@@ -43,8 +43,8 @@
   },
   "scripts": {
     "lint": "eslint --ext=.ts",
-    "build": "npx tsc",
-    "compile": "tsc",
+    "build": "npm run clean && tsc",
+    "clean": "rimraf build",
     "prepare": "npm run compile",
     "posttest": "npm run lint",
     "start": "node build/index.js",

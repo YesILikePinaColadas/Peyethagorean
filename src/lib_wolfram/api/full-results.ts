@@ -1,7 +1,7 @@
 import { WolframApi } from "./base";
 import { ApiName } from "./index";
-import { BaseEquation } from "../models/parts/equation-types";
-import { DesiredAction } from "../models/parts/desired-action-types";
+import { BaseEquation } from "../models/parts/equation-types.js";
+import { DesiredAction } from "../models/parts/desired-action-types.js";
 
 export const fullResultsApiName: Extract<ApiName, "FullResults"> = "FullResults"; //Why define like this???
 export class FullResultsApi extends WolframApi {

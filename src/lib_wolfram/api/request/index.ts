@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosError } from "axios";
-import { isDefined, isArray, isObject } from "../../../utils";
-import { ErrorApiResponse, errorApiResponseValues } from "../../models/api/api-response";
-import { ErrorResponse, ErrorWithErrors } from "../../models/api/response";
-import { WolframApiInvalidError } from "../index";
-import { Api } from "../../models/api";
+import { isDefined, isArray, isObject } from "../../../utils.js";
+import { ErrorApiResponse, errorApiResponseValues } from "../../models/api/api-response.js";
+import { ErrorResponse, ErrorWithErrors } from "../../models/api/response.js";
+import { WolframApiInvalidError } from "../index.js";
+import { Api } from "../../models/api/index.js";
 
 
 const isErrorAPIResponse = (value?: any): value is ErrorApiResponse => {

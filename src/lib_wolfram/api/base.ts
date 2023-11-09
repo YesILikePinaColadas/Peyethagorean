@@ -2,10 +2,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import { AxiosRequestConfig, AxiosRequestHeaders } from "axios";
-import { get, QueryString } from "./request";
+import { get, QueryString } from "./request/index.js";
 import { URL } from "url";
-import { SystemParameter } from "../../system-parameter";
-import { DesiredAction } from "../models/parts/desired-action-types";
+import { SystemParameter } from "../../system-parameter.js";
+import { DesiredAction } from "../models/parts/desired-action-types.js";
 
 type WolframApiConfig = {
     baseUrl: string;

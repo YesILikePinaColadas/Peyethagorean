@@ -1,6 +1,6 @@
-import { FullResultsApi } from "../../src/lib_wolfram/api/full-results";
-import { DesiredAction } from "../../src/lib_wolfram/models/parts/desired-action-types";
-import { DataProcesser } from "../../src/lib_wolfram/processing/xml-parser";
+import { FullResultsApi } from "./../lib_wolfram/api/full-results.js";
+import { DesiredAction } from "./../lib_wolfram/models/parts/desired-action-types.js";
+import { DataProcesser } from "./../lib_wolfram/processing/xml-parser.js";
 
 export class WolframRequest {
     public equation: string

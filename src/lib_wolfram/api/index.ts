@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../models/api/response";
+import { ErrorResponse } from "../models/api/response.js";
 
 export class WolframApiInvalidError extends Error {
     constructor(private errorResponse: ErrorResponse, ...params: any[]) {
