@@ -51,6 +51,12 @@ export type SubPod = {
     plaintext: string[];
 };
 
+export type MLSubPod = {
+    $: { title?: string };
+    img: { $: ImgAttributes }[];
+    mathml: any;
+};
+
 export type States = {
     $: { count: string };
     state: { $: { name: string }; input: string };
@@ -63,11 +69,28 @@ export type Pod = {
     states?: States[];
 };
 
+export type MLPod = {
+    $: PodAtttributes;
+    subpod: MLSubPod[];
+    expressiontypes: { $: { count: string }; expressiontype: { $: { name: string } } }[];
+    states?: States[];
+};
+
 export type QueryResult = {
     $: QueryResultAttributes;
     pod: Pod[];
 };
 
-export type WolframResponseObject = {
+export type MLQueryResult = {
+    $: QueryResultAttributes;
+    pod: MLPod[];
+};
+
+
+export type WolframPlainResponseObject = {
     queryresult: QueryResult;
 };
+
+export type WolframMathMLResponseObject = {
+    queryresult: MLQueryResult
+}

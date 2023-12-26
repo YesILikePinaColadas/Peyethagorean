@@ -20,14 +20,26 @@ export class FullResultsApi extends WolframApi {
         return response
     };
     /**
-     * [GET] Step-by-Step Solution
+     * [GET] Step-by-Step Solution from plain output
      * @param {Equation} equation
      * @returns {Solution} 
      */
-    public async getStepByStepSolution(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
+    public async getStepByStepSolutionPlain(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
         const response = await this.getByTargetPath<any>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution", }
+        );
+        return response
+    };
+    /**
+     * [GET] Step-by-Step Solution from MAthML output
+     * @param {Equation} equation
+     * @returns {Solution} 
+     */
+    public async getStepByStepSolutionMathML(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
+        const response = await this.getByTargetPath<any>(
+            [],
+            { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution&format=MathML", }
         );
         return response
     };

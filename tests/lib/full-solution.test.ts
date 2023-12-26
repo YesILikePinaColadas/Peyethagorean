@@ -41,29 +41,29 @@ describe(testName, () => {
         // );
 
         // For the current project, the two 
-        // it(
-        //     `[GET] Get INTEGRAL Step by step solution`,
-        //     async () => {
-        //         const desiredAction: DesiredAction = "integrate";
-        //         const response = await apiFull.getStepByStepSolution({ equation: "(5x+7)/(x^(3)+2x^(2)-x-2)" }, desiredAction);
-        //         console.log(response);
-        //         console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObject(response), desiredAction));
-        //     },
-        //     timeout
-        // );
-
-        // All styles passed
         it(
-            `[GET] Get PARTIAL FRACTION Step by step solution (AD HOC)`,
+            `[GET] Get INTEGRAL Step by step solution`,
             async () => {
-                const desiredAction: DesiredAction = "partial+fractions+";
-                const response = await apiFull.getStepByStepSolution({ equation: "(3x+2)/(x^2 - 4)" }, desiredAction);
-                console.log(response)
-                console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObject(response), desiredAction));
+                const desiredAction: DesiredAction = "integrate";
+                const response = await apiFull.getStepByStepSolutionMathML({ equation: "(5x+7)/(x^(3)+2x^(2)-x-2)" }, desiredAction);
+                const fullyUnpacked = processer.fullUnpack(response, desiredAction);
+                console.log(`[Success]`, fullyUnpacked);
             },
             timeout
         );
+
+        // All styles passed
         // it(
+        //     `[GET] Get PARTIAL FRACTION Step by step solution (AD HOC)`,
+        //     async () => {
+        //         const desiredAction: DesiredAction = "partial+fractions+";
+        //         const response = await apiFull.getStepByStepSolutionMathML({ equation: "(3x+2)/(x^2-4)" }, desiredAction);
+        //         const fullyUnpacked = processer.fullUnpack(response, desiredAction);
+        //         console.log(`[Success]`, fullyUnpacked);
+        //     },
+        //     timeout
+        // );
+        // it( 
         //     `[GET] Get PARTIAL FRACTION Step by step solution (LATEX STYLE)`,
         //     async () => {
         //         const desiredAction: DesiredAction = "partial+fractions+";
