@@ -150,8 +150,11 @@ export class DataProcesser {
         return latexConversion;
     };
     public createLineArrayFromLatex(inputString: string): string[] {
+        // Replace the "invisible times" character with the LaTeX multiplication symbol
+        const stringWithVisibleTimes = inputString.replace(/\u2062/g, '\\times');
+
         // Split the input string into an array of lines using double backslashes
-        const lines = inputString.split(/\\\\/);
+        const lines = stringWithVisibleTimes.split(/\\\\/);
 
         // Remove empty lines and trim leading/trailing whitespace from each line
         const cleanedLines = lines
