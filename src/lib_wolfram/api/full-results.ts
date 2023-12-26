@@ -1,4 +1,4 @@
-import { WolframApi } from "./base";
+import { WolframApi } from "./base.js";
 import { ApiName } from "./index";
 import { BaseEquation } from "../models/parts/equation-types.js";
 import { DesiredAction } from "../models/parts/desired-action-types.js";
