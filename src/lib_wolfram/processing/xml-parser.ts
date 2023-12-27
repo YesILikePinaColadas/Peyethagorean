@@ -143,15 +143,55 @@ export class DataProcesser {
                 };
         };
     };
-    public xmlFullMLToLatex(mlSubPod: MLSubPod): string {
+    private xmlFullMLToLatex(mlSubPod: MLSubPod): string {
         const builder = new xml2js.Builder();
         const mathObject = builder.buildObject(mlSubPod);
-        console.log(mathObject);
+        // console.log(mathObject);
         const latexConversion = MathMLToLaTeX.convert(mathObject);
         console.log(latexConversion)
         return latexConversion;
     };
-    private processLeftRight(inputString: string): string | undefined {
+    private processText(inputString: string, index: number, plainSolutionArray: string[]): string {
+        const textPattern = /\\text\{(.*?)\}/g;
+
+        const matches = inputString.match(textPattern);
+
+        console.log(matches)
+
+        if (!matches) {
+            // If no match, return the original string
+            return inputString;
+        }
+
+        let counter = 0;
+
+        matches.forEach(match => {
+            if (counter === 0) {
+                inputString = inputString.replace(match, `\\text{${plainSolutionArray[index]}}`);
+                counter++;
+            } else {
+                inputString = inputString.replace(match, "");
+            }
+        });
+
+        const secondPattern = /\\text\{(.*?)\}.*?\\/;
+
+        const secondMatch = inputString.match(secondPattern);
+
+        if (!secondMatch) {
+            return inputString;
+        }
+
+        console.log(secondMatch);
+
+        inputString = inputString.replace(secondMatch[0], `\\text{${plainSolutionArray[index]}} \\`);
+
+        console.log(inputString);
+
+        return inputString;
+
+    }
+    private processLeftRight(inputString: string): string {
         // Define the main pattern
         const mainPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\) .*?(?=[\\}])/;
         const secondPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\)/;
@@ -164,7 +204,7 @@ export class DataProcesser {
             return inputString;
         }
 
-        console.log(firstMatch)
+        // console.log(firstMatch)
 
         // Divide the string into two parts
         const firstPartMatch = firstMatch[0].match(secondPattern);
@@ -175,7 +215,7 @@ export class DataProcesser {
 
         const firstPart = firstMatch[0].substring(firstPartMatch[0].length);
 
-        console.log(firstPart);
+        // console.log(firstPart);
 
         // Create the new string
         const newString = `\\left(\\right ${firstPart} \\left.\\right)`;
@@ -183,12 +223,26 @@ export class DataProcesser {
         // Concatenate the parts to get the final result
         const result = inputString.replace(firstMatch[0], newString);
 
-        console.log(result);
+        // console.log(result);
 
         return this.processLeftRight(result);
     }
 
-    public createLineArrayFromLatex(inputString: string): string[] {
+    public createLineArrayFromLatex(inputString: string, plainSolution: string): string[] {
+        // Extracting text from plain solution
+        console.log(plainSolution);
+
+        // Split the solution string into an array of lines
+        const plainSolutionLines: string[] = plainSolution.split('\n');
+
+        // Filter out lines that do not contain text
+        const plainTextLines: string[] = plainSolutionLines.filter(line => {
+            const firstThreeChars = line.trim().slice(0, 2);
+            return /^[a-zA-Z]+$/.test(firstThreeChars);
+        });
+
+        console.log(plainTextLines);
+
         // Replace the "invisible times" character with the LaTeX multiplication symbol
         const stringWithVisibleTimes = inputString.replace(/\u2062/g, '');
 
@@ -205,8 +259,12 @@ export class DataProcesser {
         let currentLine = '';
         let matrixBalance = 0;
 
-        cleanedLines.forEach((line) => {
+        cleanedLines.forEach((line, i) => {
             currentLine += ' ' + line;
+
+            // Remove "\\text{ }=\\text{ }" and "\text{ }" pattern
+            currentLine = currentLine.replace("\\text{ }=\\text{ }", "");
+            currentLine = currentLine.replace("\\text{ }", "");
 
             const beginMatrixCount = (currentLine.match(/\\begin{matrix}/g) || []).length;
             const endMatrixCount = (currentLine.match(/\\end{matrix}/g) || []).length;
@@ -229,9 +287,17 @@ export class DataProcesser {
             mergedLines.push(formattedLine);
         }
 
+        for (let i = 0; i < mergedLines.length; i++) {
+            mergedLines[i] = this.processText(mergedLines[i], i, plainTextLines);
+        }
+
         return mergedLines;
     }
-    public fullUnpack(xml: any, desiredAction: DesiredAction) {
-        return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(this.xmlToObjectMathML(xml), desiredAction)));
+    private plainUnpack(xml: any, desiredAction: DesiredAction): string {
+        return this.extractFullSolution(this.xmlToObjectPlain(xml), desiredAction)
+    }
+
+    public fullUnpack(xmlMathml: any, desiredAction: DesiredAction, xmlPlain: any) {
+        return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(this.xmlToObjectMathML(xmlMathml), desiredAction)), this.plainUnpack(xmlPlain, desiredAction));
     }
 }

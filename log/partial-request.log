@@ -1,0 +1,43 @@
+[2023-12-28T01:53:14.238] [INFO] partial-request - 
+			method: GET
+			path: /partial
+			headers: {
+  "host": "localhost:3000",
+  "sec-fetch-site": "none",
+  "connection": "keep-alive",
+  "upgrade-insecure-requests": "1",
+  "sec-fetch-mode": "navigate",
+  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15",
+  "accept-language": "en-US,en;q=0.9",
+  "sec-fetch-dest": "document",
+  "accept-encoding": "gzip, deflate"
+}
+			params: undefined
+			query: {
+  "equation": "(3x 2)/(x^2 - 9)"
+}
+			body: undefined
+			req: ::1
+[2023-12-28T05:22:44.620] [INFO] partial-request - 
+			method: GET
+			path: /partial
+			headers: {
+  "host": "localhost:3000",
+  "sec-fetch-site": "none",
+  "connection": "keep-alive",
+  "if-none-match": "W/\"cf4-1MGf3mZs272h8UzrAd9QYrFuFn4\"",
+  "upgrade-insecure-requests": "1",
+  "sec-fetch-mode": "navigate",
+  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2.1 Safari/605.1.15",
+  "accept-language": "en-US,en;q=0.9",
+  "sec-fetch-dest": "document",
+  "accept-encoding": "gzip, deflate"
+}
+			params: undefined
+			query: {
+  "equation": "(3x 2)/(x^2 - 9)"
+}
+			body: undefined
+			req: ::1

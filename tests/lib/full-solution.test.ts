@@ -63,23 +63,25 @@ describe(testName, () => {
         //     },
         //     timeout
         // );
-        // it( 
-        //     `[GET] Get PARTIAL FRACTION Step by step solution (LATEX STYLE)`,
+        // it(
+        //     `[GET] Get PARTIAL FRACTION Step by step solution (TEXT STYLE)`,
         //     async () => {
         //         const desiredAction: DesiredAction = "partial+fractions+";
-        //         const response = await apiFull.getStepByStepSolution({ equation: "\\frac{3 x+2}{x^{2}-4}" }, desiredAction);
+        //         const response = await apiFull.getStepByStepSolutionPlain({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
         //         console.log(response)
-        //         console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObject(response), desiredAction));
+        //         console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObjectPlain(response), desiredAction));
         //     },
         //     timeout
         // );
         it(
-            `[GET] Get PARTIAL FRACTION Step by step solution (TEXT STYLE)`,
+            `[GET] Get PARTIAL FRACTION Step by step solution (BOTH)`,
             async () => {
                 const desiredAction: DesiredAction = "partial+fractions+";
-                const response = await apiFull.getStepByStepSolutionPlain({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
-                console.log(response)
-                console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObjectPlain(response), desiredAction));
+                const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
+                // console.log(responsePlain);
+                // console.log(responseMathML);
+                const fullyUnpacked = processer.fullUnpack(responseMathML, desiredAction, responsePlain);
+                console.log(`[Success]`, fullyUnpacked);
             },
             timeout
         );

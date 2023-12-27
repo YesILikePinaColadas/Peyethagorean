@@ -21,8 +21,8 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const response = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "partial+fractions+");
-            const exctractedFullSolution = processer.fullUnpack(response, "partial+fractions+");
+            const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: req.query.equation }, "partial+fractions+");
+            const exctractedFullSolution = processer.fullUnpack(responseMathML, "partial+fractions+", responsePlain);
             console.log(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {
@@ -35,8 +35,8 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const response = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "integrate");
-            const exctractedFullSolution = processer.fullUnpack(response, "integrate");
+            const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: req.query.equation }, "integrate");
+            const exctractedFullSolution = processer.fullUnpack(responseMathML, "integrate", responsePlain);
             console.log(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {

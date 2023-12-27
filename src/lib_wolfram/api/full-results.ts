@@ -43,4 +43,21 @@ export class FullResultsApi extends WolframApi {
         );
         return response
     };
+
+    /**
+     * [GET] Step-by-Step Solution in both formats
+     * @param {Equation} equation
+     * @returns {Solution} 
+     */
+    public async getStepByStepBothSolutions(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
+        const mathMLResponse = await this.getByTargetPath<any>(
+            [],
+            { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution&format=MathML", }
+        );
+        const plainResponse = await this.getByTargetPath<any>(
+            [],
+            { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution", }
+        );
+        return [mathMLResponse, plainResponse];
+    };
 };
