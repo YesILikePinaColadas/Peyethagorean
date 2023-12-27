@@ -21,9 +21,8 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const wolframReq = new WolframRequest(req.query.equation, "partial+fractions+");
-            const response = await apiFull.getStepByStepSolutionMathML({ equation: wolframReq.equation }, wolframReq.desiredAction);
-            const exctractedFullSolution = processer.fullUnpack(response, wolframReq.desiredAction);
+            const response = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "partial+fractions+");
+            const exctractedFullSolution = processer.fullUnpack(response, "partial+fractions+");
             console.log(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {
@@ -36,9 +35,8 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const wolframReq = new WolframRequest(req.query.equation, "integrate");
-            const response = await apiFull.getStepByStepSolutionMathML({ equation: wolframReq.equation }, wolframReq.desiredAction);
-            const exctractedFullSolution = processer.fullUnpack(response, wolframReq.desiredAction);
+            const response = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "integrate");
+            const exctractedFullSolution = processer.fullUnpack(response, "integrate");
             console.log(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {

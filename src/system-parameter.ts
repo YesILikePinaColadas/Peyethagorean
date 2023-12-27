@@ -10,6 +10,9 @@ export const systemParameterName = [
     // TEST
     "NODE_ENV",
 
+    // LOG
+    "LOG_BACKUPS",
+
     // WOLFRAM API,
     "WOLFRAM_URL",
     "WOLFRAM_APPID",

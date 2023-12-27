@@ -41,16 +41,16 @@ describe(testName, () => {
         // );
 
         // For the current project, the two 
-        it(
-            `[GET] Get INTEGRAL Step by step solution`,
-            async () => {
-                const desiredAction: DesiredAction = "integrate";
-                const response = await apiFull.getStepByStepSolutionMathML({ equation: "(5x+7)/(x^(3)+2x^(2)-x-2)" }, desiredAction);
-                const fullyUnpacked = processer.fullUnpack(response, desiredAction);
-                console.log(`[Success]`, fullyUnpacked);
-            },
-            timeout
-        );
+        // it(
+        //     `[GET] Get INTEGRAL Step by step solution`,
+        //     async () => {
+        //         const desiredAction: DesiredAction = "integrate";
+        //         const response = await apiFull.getStepByStepSolutionMathML({ equation: "(5x+7)/(x^(3)+2x^(2)-x-2)" }, desiredAction);
+        //         const fullyUnpacked = processer.fullUnpack(response, desiredAction);
+        //         console.log(`[Success]`, fullyUnpacked);
+        //     },
+        //     timeout
+        // );
 
         // All styles passed
         // it(
@@ -73,16 +73,16 @@ describe(testName, () => {
         //     },
         //     timeout
         // );
-        // it(
-        //     `[GET] Get PARTIAL FRACTION Step by step solution (TEXT STYLE)`,
-        //     async () => {
-        //         const desiredAction: DesiredAction = "partial+fractions+";
-        //         const response = await apiFull.getStepByStepSolution({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
-        //         console.log(response)
-        //         console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObject(response), desiredAction));
-        //     },
-        //     timeout
-        // );
+        it(
+            `[GET] Get PARTIAL FRACTION Step by step solution (TEXT STYLE)`,
+            async () => {
+                const desiredAction: DesiredAction = "partial+fractions+";
+                const response = await apiFull.getStepByStepSolutionPlain({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
+                console.log(response)
+                console.log(`[Success]`, processer.extractFullSolution(processer.xmlToObjectPlain(response), desiredAction));
+            },
+            timeout
+        );
         // it(
         //     `[GET] Get PLOT`,
         //     async () => {

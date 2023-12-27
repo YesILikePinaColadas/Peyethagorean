@@ -146,12 +146,51 @@ export class DataProcesser {
     public xmlFullMLToLatex(mlSubPod: MLSubPod): string {
         const builder = new xml2js.Builder();
         const mathObject = builder.buildObject(mlSubPod);
+        console.log(mathObject);
         const latexConversion = MathMLToLaTeX.convert(mathObject);
+        console.log(latexConversion)
         return latexConversion;
     };
+    private processLeftRight(inputString: string): string | undefined {
+        // Define the main pattern
+        const mainPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\) .*?(?=[\\}])/;
+        const secondPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\)/;
+
+        // Perform the first regex test
+        const firstMatch = inputString.match(mainPattern);
+
+        if (!firstMatch) {
+            // If no match, return the original string
+            return inputString;
+        }
+
+        console.log(firstMatch)
+
+        // Divide the string into two parts
+        const firstPartMatch = firstMatch[0].match(secondPattern);
+
+        if (!firstPartMatch) {
+            return inputString;
+        }
+
+        const firstPart = firstMatch[0].substring(firstPartMatch[0].length);
+
+        console.log(firstPart);
+
+        // Create the new string
+        const newString = `\\left(\\right ${firstPart} \\left.\\right)`;
+
+        // Concatenate the parts to get the final result
+        const result = inputString.replace(firstMatch[0], newString);
+
+        console.log(result);
+
+        return this.processLeftRight(result);
+    }
+
     public createLineArrayFromLatex(inputString: string): string[] {
         // Replace the "invisible times" character with the LaTeX multiplication symbol
-        const stringWithVisibleTimes = inputString.replace(/\u2062/g, '\\times');
+        const stringWithVisibleTimes = inputString.replace(/\u2062/g, '');
 
         // Split the input string into an array of lines using double backslashes
         const lines = stringWithVisibleTimes.split(/\\\\/);
@@ -174,15 +213,20 @@ export class DataProcesser {
 
             matrixBalance = beginMatrixCount - endMatrixCount;
 
+            currentLine = this.processLeftRight(currentLine) as string;
+
             if (matrixBalance === 0) {
-                mergedLines.push(currentLine.trim());
+                const formattedLine = currentLine.replace(/:/, ': \\\\ \\\\');
+                mergedLines.push(formattedLine.trim());
                 currentLine = '';
+
             }
         });
 
         // Push the remaining content if any
         if (currentLine.trim() !== '') {
-            mergedLines.push(currentLine.trim());
+            const formattedLine = currentLine.replace(/:/, ': \\\\ \\\\');
+            mergedLines.push(formattedLine);
         }
 
         return mergedLines;

@@ -14,3 +14,10 @@ export type Input = {
 };
 
 export const isInput = (input: Input): input is Input => isDefined(input) && input.input.search("=") !== -1;
+
+export function jsonReplacer(key: any, value: any) {
+    if (typeof value === "object" || Array.isArray(value)) {
+        return value;
+    }
+    return value;
+}
