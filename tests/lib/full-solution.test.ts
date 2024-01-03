@@ -77,10 +77,9 @@ describe(testName, () => {
             `[GET] Get PARTIAL FRACTION Step by step solution (BOTH)`,
             async () => {
                 const desiredAction: DesiredAction = "partial+fractions+";
-                const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
-                // console.log(responsePlain);
+                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
                 // console.log(responseMathML);
-                const fullyUnpacked = processer.fullUnpack(responseMathML, desiredAction, responsePlain);
+                const fullyUnpacked = processer.fullMlUnpack(responseMathML, desiredAction);
                 console.log(`[Success]`, fullyUnpacked);
             },
             timeout

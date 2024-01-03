@@ -1,3 +1,4 @@
+import { Log } from "../lib/log.js";
 import { FullResultsApi } from "./../lib_wolfram/api/full-results.js";
 import { DesiredAction } from "./../lib_wolfram/models/parts/desired-action-types.js";
 import { DataProcesser } from "./../lib_wolfram/processing/xml-parser.js";
@@ -21,12 +22,12 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: req.query.equation }, "partial+fractions+");
-            const exctractedFullSolution = processer.fullUnpack(responseMathML, "partial+fractions+", responsePlain);
-            console.log(`[Success]`, exctractedFullSolution);
+            const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "partial+fractions+");
+            const exctractedFullSolution = processer.fullMlUnpack(responseMathML, "partial+fractions+");
+            Log.info(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {
-            console.log(`Some went wrong here, chief. ${e}`);
+            Log.error(`Some went wrong here, chief. ${e}`);
         }
     }
 
@@ -35,12 +36,12 @@ export default class PeyethagoreanController {
         const processer = new DataProcesser();
 
         try {
-            const [responseMathML, responsePlain] = await apiFull.getStepByStepBothSolutions({ equation: req.query.equation }, "integrate");
-            const exctractedFullSolution = processer.fullUnpack(responseMathML, "integrate", responsePlain);
-            console.log(`[Success]`, exctractedFullSolution);
+            const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "integrate");
+            const exctractedFullSolution = processer.fullMlUnpack(responseMathML, "integrate");
+            Log.info(`[Success]`, exctractedFullSolution);
             await res.send({ solution: exctractedFullSolution });
         } catch (e) {
-            console.log(`Some went wrong here, chief. ${e}`);
+            Log.error(`Some went wrong here, chief. ${e}`);
         }
     }
 }

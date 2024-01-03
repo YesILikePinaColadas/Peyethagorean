@@ -4,3 +4,4 @@ build/
 .editorconfig
 .cache
 dist
+log/

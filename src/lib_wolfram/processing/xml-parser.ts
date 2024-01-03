@@ -3,6 +3,7 @@ import { MLSubPod, WolframMathMLResponseObject, WolframPlainResponseObject } fro
 import { isDefined, isObject } from "../../utils.js";
 import { DesiredAction } from "../models/parts/desired-action-types.js";
 import { MathMLToLaTeX } from 'mathml-to-latex';
+import * as cheerio from 'cheerio';
 import xml2js from "xml2js";
 
 export class DataProcesser {
@@ -90,64 +91,39 @@ export class DataProcesser {
                 };
         };
     };
-    public extractFullMLSolution(xmlObject: WolframMathMLResponseObject, desiredAction: DesiredAction): MLSubPod {
-        const podArray = xmlObject.queryresult.pod;
+    public extractFullMLSolution(desiredAction: DesiredAction, xmlMlResponse: string): string {
+        let $: cheerio.CheerioAPI;
+        let mathmlContent: string | null;
         switch (desiredAction) {
-            case "solve":
-                const resultsPod = podArray.find(pod => pod.$.title === 'Results');
-                if (isDefined(resultsPod)) {
-                    const possibleStepsPod = resultsPod.subpod.find(subpod => subpod.$.title === 'Possible intermediate steps');
-                    if (isDefined(possibleStepsPod)) {
-                        return possibleStepsPod;
-                    } else {
-                        throw new Error("No Possible intermediate steps Pod.")
-                    };
-                } else {
-                    throw new Error("No results Pod.")
-                };
             case "min":
-                const gloabalMinimaPod = podArray.find(pod => pod.$.title === 'Global minima');
-                if (isDefined(gloabalMinimaPod)) {
-                    const possibleStepsPod = gloabalMinimaPod.subpod.find(subpod => subpod.$.title === 'Possible intermediate steps');
-                    if (isDefined(possibleStepsPod)) {
-                        return possibleStepsPod;
-                    } else {
-                        throw new Error("No Possible intermediate steps Pod.")
-                    };
+                $ = cheerio.load(xmlMlResponse, { xmlMode: true });
+                mathmlContent = $('pod[title="Global minima"] subpod[title="Possible intermediate steps"] mathml').html();
+                if (isDefined(mathmlContent)) {
+                    return mathmlContent;
                 } else {
-                    throw new Error("No results Pod.")
+                    throw new Error("No Possible intermediate steps Pod.")
                 };
             case "integrate":
-                const gloablMinimaPod = podArray.find(pod => pod.$.title === 'Indefinite integrals');
-                if (isDefined(gloablMinimaPod)) {
-                    const possibleStepsPod = gloablMinimaPod.subpod.find(subpod => subpod.$.title === 'Possible intermediate steps');
-                    if (isDefined(possibleStepsPod)) {
-                        return possibleStepsPod;
-                    } else {
-                        throw new Error("No Possible intermediate steps Pod.")
-                    };
+                $ = cheerio.load(xmlMlResponse, { xmlMode: true });
+                mathmlContent = $('pod[title="Indefinite integrals"] subpod[title="Possible intermediate steps"] mathml').html();
+                if (isDefined(mathmlContent)) {
+                    return mathmlContent;
                 } else {
-                    throw new Error("No results Pod.")
+                    throw new Error("No Possible intermediate steps Pod.")
                 };
+            case "solve":
             case "partial+fractions+":
-                const partFrac = podArray.find(pod => pod.$.title === 'Results');
-                if (isDefined(partFrac)) {
-                    const possibleStepsPod = partFrac.subpod.find(subpod => subpod.$.title === 'Possible intermediate steps');
-                    if (isDefined(possibleStepsPod)) {
-                        return possibleStepsPod;
-                    } else {
-                        throw new Error("No Possible intermediate steps Pod.")
-                    };
+                $ = cheerio.load(xmlMlResponse, { xmlMode: true });
+                mathmlContent = $('pod[title="Results"] subpod[title="Possible intermediate steps"] mathml').html();
+                if (isDefined(mathmlContent)) {
+                    return mathmlContent;
                 } else {
-                    throw new Error("No results Pod.")
+                    throw new Error("No Possible intermediate steps Pod.")
                 };
         };
     };
-    private xmlFullMLToLatex(mlSubPod: MLSubPod): string {
-        const builder = new xml2js.Builder();
-        const mathObject = builder.buildObject(mlSubPod);
-        // console.log(mathObject);
-        const latexConversion = MathMLToLaTeX.convert(mathObject);
+    private xmlFullMLToLatex(mathMlResponse: string): string {
+        const latexConversion = MathMLToLaTeX.convert(mathMlResponse);
         console.log(latexConversion)
         return latexConversion;
     };
@@ -156,7 +132,7 @@ export class DataProcesser {
 
         const matches = inputString.match(textPattern);
 
-        console.log(matches)
+        // console.log(matches)
 
         if (!matches) {
             // If no match, return the original string
@@ -182,11 +158,11 @@ export class DataProcesser {
             return inputString;
         }
 
-        console.log(secondMatch);
+        // console.log(secondMatch);
 
         inputString = inputString.replace(secondMatch[0], `\\text{${plainSolutionArray[index]}} \\`);
 
-        console.log(inputString);
+        // console.log(inputString);
 
         return inputString;
 
@@ -201,6 +177,7 @@ export class DataProcesser {
 
         if (!firstMatch) {
             // If no match, return the original string
+            // console.log("Original string of this call will be returned", inputString);
             return inputString;
         }
 
@@ -210,6 +187,7 @@ export class DataProcesser {
         const firstPartMatch = firstMatch[0].match(secondPattern);
 
         if (!firstPartMatch) {
+            // console.log("There was no second pattern match", inputString);
             return inputString;
         }
 
@@ -223,25 +201,25 @@ export class DataProcesser {
         // Concatenate the parts to get the final result
         const result = inputString.replace(firstMatch[0], newString);
 
-        // console.log(result);
+        console.log("final result of processing before calling again", result);
 
         return this.processLeftRight(result);
     }
 
-    public createLineArrayFromLatex(inputString: string, plainSolution: string): string[] {
+    public createLineArrayFromLatex(inputString: string): string[] {
         // Extracting text from plain solution
-        console.log(plainSolution);
+        // console.log(plainSolution);
 
         // Split the solution string into an array of lines
-        const plainSolutionLines: string[] = plainSolution.split('\n');
+        // const plainSolutionLines: string[] = plainSolution.split('\n');
 
         // Filter out lines that do not contain text
-        const plainTextLines: string[] = plainSolutionLines.filter(line => {
-            const firstThreeChars = line.trim().slice(0, 2);
-            return /^[a-zA-Z]+$/.test(firstThreeChars);
-        });
+        // const plainTextLines: string[] = plainSolutionLines.filter(line => {
+        //     const firstThreeChars = line.trim().slice(0, 2);
+        //     return /^[a-zA-Z]+$/.test(firstThreeChars);
+        // });
 
-        console.log(plainTextLines);
+        // console.log(plainTextLines);
 
         // Replace the "invisible times" character with the LaTeX multiplication symbol
         const stringWithVisibleTimes = inputString.replace(/\u2062/g, '');
@@ -259,11 +237,11 @@ export class DataProcesser {
         let currentLine = '';
         let matrixBalance = 0;
 
-        cleanedLines.forEach((line, i) => {
+        cleanedLines.forEach(line => {
             currentLine += ' ' + line;
 
             // Remove "\\text{ }=\\text{ }" and "\text{ }" pattern
-            currentLine = currentLine.replace("\\text{ }=\\text{ }", "");
+            currentLine = currentLine.replace("\\text{ }=\\text{ }", " = ");
             currentLine = currentLine.replace("\\text{ }", "");
 
             const beginMatrixCount = (currentLine.match(/\\begin{matrix}/g) || []).length;
@@ -271,7 +249,7 @@ export class DataProcesser {
 
             matrixBalance = beginMatrixCount - endMatrixCount;
 
-            currentLine = this.processLeftRight(currentLine) as string;
+            // currentLine = this.processLeftRight(currentLine) as string;
 
             if (matrixBalance === 0) {
                 const formattedLine = currentLine.replace(/:/, ': \\\\ \\\\');
@@ -287,17 +265,17 @@ export class DataProcesser {
             mergedLines.push(formattedLine);
         }
 
-        for (let i = 0; i < mergedLines.length; i++) {
-            mergedLines[i] = this.processText(mergedLines[i], i, plainTextLines);
-        }
+        // for (let i = 0; i < mergedLines.length; i++) {
+        //     mergedLines[i] = this.processText(mergedLines[i], i, plainTextLines);
+        // }
 
         return mergedLines;
     }
-    private plainUnpack(xml: any, desiredAction: DesiredAction): string {
+    private plainUnpack(xml: string, desiredAction: DesiredAction): string {
         return this.extractFullSolution(this.xmlToObjectPlain(xml), desiredAction)
     }
 
-    public fullUnpack(xmlMathml: any, desiredAction: DesiredAction, xmlPlain: any) {
-        return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(this.xmlToObjectMathML(xmlMathml), desiredAction)), this.plainUnpack(xmlPlain, desiredAction));
+    public fullMlUnpack(xmlMathml: string, desiredAction: DesiredAction) {
+        return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(desiredAction, xmlMathml)));
     }
 }

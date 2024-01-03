@@ -12,8 +12,8 @@ export class FullResultsApi extends WolframApi {
      * @param {Equation} equation
      * @returns {Solution} 
      */
-    public async getFullSolution(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
-        const response = await this.getByTargetPath<any>(
+    public async getFullSolution(equation: BaseEquation, desiredAction: DesiredAction): Promise<string> {
+        const response = await this.getByTargetPath<string>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction) }
         );
@@ -24,8 +24,8 @@ export class FullResultsApi extends WolframApi {
      * @param {Equation} equation
      * @returns {Solution} 
      */
-    public async getStepByStepSolutionPlain(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
-        const response = await this.getByTargetPath<any>(
+    public async getStepByStepSolutionPlain(equation: BaseEquation, desiredAction: DesiredAction): Promise<string> {
+        const response = await this.getByTargetPath<string>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution", }
         );
@@ -36,8 +36,8 @@ export class FullResultsApi extends WolframApi {
      * @param {Equation} equation
      * @returns {Solution} 
      */
-    public async getStepByStepSolutionMathML(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
-        const response = await this.getByTargetPath<any>(
+    public async getStepByStepSolutionMathML(equation: BaseEquation, desiredAction: DesiredAction): Promise<string> {
+        const response = await this.getByTargetPath<string>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution&format=MathML", }
         );
@@ -49,15 +49,17 @@ export class FullResultsApi extends WolframApi {
      * @param {Equation} equation
      * @returns {Solution} 
      */
-    public async getStepByStepBothSolutions(equation: BaseEquation, desiredAction: DesiredAction): Promise<any> {
-        const mathMLResponse = await this.getByTargetPath<any>(
+    public async getStepByStepBothSolutions(equation: BaseEquation, desiredAction: DesiredAction): Promise<string[]> {
+        const mathMLResponse = await this.getByTargetPath<string>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution&format=MathML", }
         );
-        const plainResponse = await this.getByTargetPath<any>(
+        const plainResponse = await this.getByTargetPath<string>(
             [],
             { appid: this.apiKey, input: this.makeInputString(equation.equation, desiredAction), podstate: "Step-by-step%20solution", }
         );
+        // console.log(plainResponse);
+        // console.log(mathMLResponse);
         return [mathMLResponse, plainResponse];
     };
 };
