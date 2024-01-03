@@ -228,7 +228,7 @@ export class DataProcesser {
         const stringWithNormalSpaces = stringWithVisibleTimes.replace(/\u2060/g, " ");
 
         // Split the input string into an array of lines using double backslashes
-        const lines = stringWithNormalSpaces.split(/(?<!&.{0,3})\\\\(?!.{0,3}&)/);
+        const lines = stringWithNormalSpaces.split(/(?<!&.{0,4})\\\\(?!.{0,4}&|\\begin\{matrix\}.{0,3}\s|.{0,18}\s.{0,3}\\end\{matrix\})/);
 
         // Remove empty lines and trim leading/trailing whitespace from each line
         const cleanedLines = lines
