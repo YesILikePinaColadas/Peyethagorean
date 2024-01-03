@@ -221,11 +221,14 @@ export class DataProcesser {
 
         // console.log(plainTextLines);
 
-        // Replace the "invisible times" character with the LaTeX multiplication symbol
+        // Replace the "invisible times" character with nothing
         const stringWithVisibleTimes = inputString.replace(/\u2062/g, '');
 
+        // Replace weird space with regular space
+        const stringWithNormalSpaces = stringWithVisibleTimes.replace(/\u2060/g, " ");
+
         // Split the input string into an array of lines using double backslashes
-        const lines = stringWithVisibleTimes.split(/\\\\/);
+        const lines = stringWithNormalSpaces.split(/(?<!&.{0,3})\\\\(?!.{0,3}&)/);
 
         // Remove empty lines and trim leading/trailing whitespace from each line
         const cleanedLines = lines
