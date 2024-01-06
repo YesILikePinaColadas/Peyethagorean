@@ -1,10 +1,14 @@
 import { parseString } from "xml2js";
-import { MLSubPod, WolframMathMLResponseObject, WolframPlainResponseObject } from "../models/parts/response-types.js";
+import { WolframMathMLResponseObject, WolframPlainResponseObject } from "../models/parts/response-types.js";
 import { isDefined, isObject } from "../../utils.js";
 import { DesiredAction } from "../models/parts/desired-action-types.js";
 import { MathMLToLaTeX } from 'mathml-to-latex';
 import * as cheerio from 'cheerio';
-import xml2js from "xml2js";
+
+export type ReturnObject = {
+    latexText: string[];
+    countArray: number[];
+}
 
 export class DataProcesser {
     private xml: any;
@@ -206,20 +210,11 @@ export class DataProcesser {
         return this.processLeftRight(result);
     }
 
-    public createLineArrayFromLatex(inputString: string): string[] {
-        // Extracting text from plain solution
-        // console.log(plainSolution);
+    public createLineArrayFromLatex(inputString: string): ReturnObject {
+        // Regex to match for counting characters:
 
-        // Split the solution string into an array of lines
-        // const plainSolutionLines: string[] = plainSolution.split('\n');
-
-        // Filter out lines that do not contain text
-        // const plainTextLines: string[] = plainSolutionLines.filter(line => {
-        //     const firstThreeChars = line.trim().slice(0, 2);
-        //     return /^[a-zA-Z]+$/.test(firstThreeChars);
-        // });
-
-        // console.log(plainTextLines);
+        const countTextRegex = /\\begin{matrix}(.*?)\\\\/;
+        let countArray: number[] = [];
 
         // Replace the "invisible times" character with nothing
         const stringWithVisibleTimes = inputString.replace(/\u2062/g, '');
@@ -254,31 +249,45 @@ export class DataProcesser {
 
             // currentLine = this.processLeftRight(currentLine) as string;
 
+            // Ensuring balance in a single line is correct
             if (matrixBalance === 0) {
-                const formattedLine = currentLine.replace(/:/, ': \\\\ \\\\');
-                mergedLines.push(formattedLine.trim());
+                // Adding double spaces
+                const doubleSeparatedLine = currentLine.replace(/:/, ': \\\\ \\\\');
+                mergedLines.push(doubleSeparatedLine.trim());
+
+                // Counting text
+                console.log(doubleSeparatedLine);
+                const textMatch = doubleSeparatedLine.match(countTextRegex);
+                if (textMatch && textMatch[1]) {
+                    const textToCount = textMatch[1];
+                    if (textToCount === "\\text{Therefore}: ") {
+                        countArray.push(textToCount.length * 2);
+                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                    } else {
+                        countArray.push(textToCount.length);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                } else {
+                    countArray.push(currentLine.length);
+                    console.log("Text not found so counted everythibg", `length:${currentLine.length}`);
+                }
                 currentLine = '';
 
             }
         });
 
-        // Push the remaining content if any
-        if (currentLine.trim() !== '') {
-            const formattedLine = currentLine.replace(/:/, ': \\\\ \\\\');
-            mergedLines.push(formattedLine);
-        }
+        const returnObject = {
+            latexText: mergedLines,
+            countArray: countArray,
+        };
 
-        // for (let i = 0; i < mergedLines.length; i++) {
-        //     mergedLines[i] = this.processText(mergedLines[i], i, plainTextLines);
-        // }
-
-        return mergedLines;
+        return returnObject;
     }
     private plainUnpack(xml: string, desiredAction: DesiredAction): string {
         return this.extractFullSolution(this.xmlToObjectPlain(xml), desiredAction)
     }
 
-    public fullMlUnpack(xmlMathml: string, desiredAction: DesiredAction) {
+    public fullMlUnpack(xmlMathml: string, desiredAction: DesiredAction): ReturnObject {
         return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(desiredAction, xmlMathml)));
     }
 }

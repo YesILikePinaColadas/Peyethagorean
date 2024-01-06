@@ -25,7 +25,7 @@ export default class PeyethagoreanController {
             const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "partial+fractions+");
             const exctractedFullSolution = processer.fullMlUnpack(responseMathML, "partial+fractions+");
             Log.info(`[Success]`, exctractedFullSolution);
-            await res.send({ solution: exctractedFullSolution });
+            await res.send(exctractedFullSolution);
         } catch (e) {
             Log.error(`Some went wrong here, chief. ${e}`);
         }
@@ -39,7 +39,7 @@ export default class PeyethagoreanController {
             const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: req.query.equation }, "integrate");
             const exctractedFullSolution = processer.fullMlUnpack(responseMathML, "integrate");
             Log.info(`[Success]`, exctractedFullSolution);
-            await res.send({ solution: exctractedFullSolution });
+            await res.send(exctractedFullSolution);
         } catch (e) {
             Log.error(`Some went wrong here, chief. ${e}`);
         }
