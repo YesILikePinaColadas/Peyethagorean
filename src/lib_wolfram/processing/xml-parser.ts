@@ -225,6 +225,8 @@ export class DataProcesser {
         // Split the input string into an array of lines using double backslashes
         const lines = stringWithNormalSpaces.split(/(?<!&.{0,4})\\\\(?!.{0,4}&|\\begin\{matrix\}.{0,3}\s|.{0,18}\s.{0,3}\\end\{matrix\})/);
 
+        console.log(lines);
+
         // Remove empty lines and trim leading/trailing whitespace from each line
         const cleanedLines = lines
             .filter((line) => line.trim() !== '')
@@ -234,13 +236,16 @@ export class DataProcesser {
         const mergedLines: string[] = [];
         let currentLine = '';
         let matrixBalance = 0;
+        let lineCount = 0;
 
         cleanedLines.forEach(line => {
             currentLine += ' ' + line;
+            lineCount++;
 
+            // FOR NOW WE DECIDED TO NO LONGER DO THIS FOR STYLISTIC REASONS
             // Remove "\\text{ }=\\text{ }" and "\text{ }" pattern
-            currentLine = currentLine.replace("\\text{ }=\\text{ }", " = ");
-            currentLine = currentLine.replace("\\text{ }", "");
+            // currentLine = currentLine.replace("\\text{ }=\\text{ }", " = ");
+            // currentLine = currentLine.replace("\\text{ }", "");
 
             const beginMatrixCount = (currentLine.match(/\\begin{matrix}/g) || []).length;
             const endMatrixCount = (currentLine.match(/\\end{matrix}/g) || []).length;
@@ -248,6 +253,11 @@ export class DataProcesser {
             matrixBalance = beginMatrixCount - endMatrixCount;
 
             // currentLine = this.processLeftRight(currentLine) as string;
+
+            // Case of more than one equation that was bugging
+            if (lineCount >= 2) {
+                currentLine += ' \\\\';
+            }
 
             // Ensuring balance in a single line is correct
             if (matrixBalance === 0) {
@@ -261,9 +271,14 @@ export class DataProcesser {
                 if (textMatch && textMatch[1]) {
                     const textToCount = textMatch[1];
                     if (textToCount === "\\text{Therefore}: ") {
-                        countArray.push(textToCount.length * 2);
+                        countArray.push(textToCount.length * 3);
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
-                    } else {
+                    }
+                    else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: ") {
+                        countArray.push(textToCount.length - 40);
+                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                    }
+                    else {
                         countArray.push(textToCount.length);
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
@@ -271,8 +286,9 @@ export class DataProcesser {
                     countArray.push(currentLine.length);
                     console.log("Text not found so counted everythibg", `length:${currentLine.length}`);
                 }
+                console.log("Pushed line", currentLine);
                 currentLine = '';
-
+                lineCount = 0;
             }
         });
 
