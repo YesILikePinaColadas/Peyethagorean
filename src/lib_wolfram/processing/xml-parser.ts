@@ -265,7 +265,15 @@ export class DataProcesser {
                 const doubleSeparatedLine = currentLine.replace(/:/, ': \\\\ \\\\');
                 // Fixing intergals 
                 const integralFixedLines = doubleSeparatedLine.replace(/(\s)\\int(\s)/g, '$1\\int_$2');
-                mergedLines.push(integralFixedLines.trim());
+                // Fixinf strings that are too long because of Then statements
+                const thenFixedLines: string = integralFixedLines.replace(/\.\\text\{ Then \} /g, '.\\\\ \\text{ Then } ');
+                mergedLines.push(thenFixedLines.trim());
+
+                let thenPresent: boolean = false;
+                // Dividing size in 2 in case of cutting for Then
+                if (integralFixedLines !== thenFixedLines) {
+                    thenPresent = true;
+                }
 
                 // Counting text
                 console.log(doubleSeparatedLine);
@@ -281,12 +289,17 @@ export class DataProcesser {
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else {
-                        countArray.push(textToCount.length);
-                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                        if (thenPresent) {
+                            countArray.push(textToCount.length / 2);
+                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                        } else {
+                            countArray.push(textToCount.length);
+                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                        }
                     }
                 } else {
                     countArray.push(currentLine.length);
-                    console.log("Text not found so counted everythibg", `length:${currentLine.length}`);
+                    console.log("Text not found so counted everything", `length:${currentLine.length}`);
                 }
                 console.log("Pushed line", currentLine);
                 currentLine = '';
