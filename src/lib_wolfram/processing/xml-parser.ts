@@ -263,15 +263,17 @@ export class DataProcesser {
             if (matrixBalance === 0) {
                 // Adding double spaces
                 const doubleSeparatedLine = currentLine.replace(/:/, ': \\\\ \\\\');
-                mergedLines.push(doubleSeparatedLine.trim());
+                // Fixing intergals 
+                const integralFixedLines = doubleSeparatedLine.replace(/(\s)\\int(\s)/g, '$1\\int_$2');
+                mergedLines.push(integralFixedLines.trim());
 
                 // Counting text
                 console.log(doubleSeparatedLine);
                 const textMatch = doubleSeparatedLine.match(countTextRegex);
                 if (textMatch && textMatch[1]) {
                     const textToCount = textMatch[1];
-                    if (textToCount === "\\text{Therefore}: ") {
-                        countArray.push(textToCount.length * 3);
+                    if (textToCount === "\\text{Therefore}: " || textToCount === "\\text{Which is equal to}: ") {
+                        countArray.push(textToCount.length * 4);
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: ") {

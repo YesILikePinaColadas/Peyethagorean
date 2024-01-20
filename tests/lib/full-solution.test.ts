@@ -4,6 +4,13 @@ dotenv.config();
 import { FullResultsApi } from "../../src/lib_wolfram/api/full-results";
 import { DesiredAction } from "../../src/lib_wolfram/models/parts/desired-action-types";
 import { DataProcesser } from "../../src/lib_wolfram/processing/xml-parser";
+import * as fs from 'fs';
+import * as path from 'path';
+
+const relativePath = "Desktop";
+
+const desktopPath: string = path.join(require('os').homedir(), relativePath);
+const filePath: string = path.join(desktopPath, 'testResults.txt');
 
 const testName = "[api: FullSolution]" as const;
 const timeout = 1000000;
@@ -76,10 +83,11 @@ describe(testName, () => {
         it(
             `[GET] Get PARTIAL FRACTION Step by step solution (BOTH)`,
             async () => {
-                const desiredAction: DesiredAction = "partial+fractions+";
-                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "$\\frac{3 x+2}{x^{2}-4}$" }, desiredAction);
+                const desiredAction: DesiredAction = "integrate";
+                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "\\frac{1}{\\sqrt{a^2-x^2}}" }, desiredAction);
                 // console.log(responseMathML);
                 const fullyUnpacked = processer.fullMlUnpack(responseMathML, desiredAction);
+                fs.writeFileSync(filePath, fullyUnpacked.latexText.toString());
                 console.log(`[Success]`, fullyUnpacked);
             },
             timeout
