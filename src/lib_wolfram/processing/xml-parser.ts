@@ -281,7 +281,7 @@ export class DataProcesser {
                 if (textMatch && textMatch[1]) {
                     const textToCount = textMatch[1];
                     if (textToCount === "\\text{Therefore}: " || textToCount === "\\text{Which is equal to}: ") {
-                        countArray.push(Math.floor(textToCount.length * 4.5));
+                        countArray.push(Math.round(textToCount.length * 4.5));
                         // console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: ") {
@@ -302,7 +302,7 @@ export class DataProcesser {
                     }
                     else {
                         if (thenPresent) {
-                            countArray.push(textToCount.length / 2);
+                            countArray.push(Math.round(textToCount.length / 2));
                             // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         } else {
                             countArray.push(textToCount.length);
