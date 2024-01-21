@@ -282,38 +282,53 @@ export class DataProcesser {
                     const textToCount = textMatch[1];
                     if (textToCount === "\\text{Therefore}: " || textToCount === "\\text{Which is equal to}: ") {
                         countArray.push(Math.round(textToCount.length * 4.5));
-                        // console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
-                    else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: ") {
+                    else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: " ||
+                        textToCount === "\\text{Multiply numerator and denominator of } sec  \\left(\\right. u \\left.\\right) \\text{ by } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)   : ") {
                         countArray.push(textToCount.length - 40);
-                        // console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Expand and collect in terms of powers of } x : ") {
                         countArray.push(textToCount.length + 30);
-                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{The partial fraction expansion is of the form}: ") {
                         countArray.push(textToCount.length + 10);
-                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
-                    else if (textToCount === "\\text{Then the partial fraction expansion is of the form}: ") {
-                        countArray.push(textToCount.length + 10);
-                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    else if (
+                        textToCount === "\\text{Use the reduction formula},\\text{ } \\int \\left(sec\\right)^{m} \\left(\\right. u \\left.\\right)  d  u \\text{ }=\\text{ } \\frac{sin  \\left(\\right. u \\left.\\right)  \\left(sec\\right)^{m - 1} \\left(\\right. u \\left.\\right)}{m - 1} \\text{ }+\\text{ } \\frac{m - 2}{m - 1} \\int \\left(sec\\right)^{- 2 + m} \\left(\\right. u \\left.\\right)  d  u ,\\text{ where } m \\textrm{ }\\text{ }=\\text{ } 3 : " ||
+                        textToCount === "\\text{For the integrand } \\frac{\\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)  tan  \\left(\\right. u \\left.\\right)}{sec  \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)} ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right) \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) \\left.\\right) \\textrm{ } d  u : " ||
+                        textToCount === "\\text{For the integrand } \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) ,\\text{ write } \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right) \\text{ as } \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - 1 : " ||
+                        textToCount === "\\text{Expanding the integrand } sec  \\left(\\right. u \\left.\\right)  \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - 1 \\left.\\right) \\text{ gives } \\left(sec\\right)^{3} \\left(\\right. u \\left.\\right) - sec  \\left(\\right. u \\left.\\right) : "
+                    ) {
+                        countArray.push(Math.round(textToCount.length / 2));
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{Factor the answer a different way}: ") {
+                        countArray.push(textToCount.length + 15);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{For the integrand } \\sqrt{a^{2} + x^{2}} ,\\text{ }(\\text{assuming all variables are positive})\\text{ substitute } x \\textrm{ }\\text{ }=\\text{ } a  tan  \\left(\\right. u \\left.\\right) \\text{ and } d  x \\textrm{ }\\text{ }=\\text{ } a  \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) \\textrm{ } d  u .\\text{ Then } \\sqrt{a^{2} + x^{2}} \\text{ }=\\text{ } \\sqrt{a^{2}  \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right) + a^{2}} \\text{ }=\\text{ } a  sec  \\left(\\right. u \\left.\\right) \\text{ and } u \\textrm{ }\\text{ }=\\text{ } \\left(tan\\right)^{- 1} \\left(\\right. \\frac{x}{a} \\left.\\right) : " ||
+                        textToCount === "\\text{For the integrand } \\sqrt{x^{2} - a^{2}} ,\\text{ }(\\text{assuming all variables are positive})\\text{ substitute } x \\textrm{ }\\text{ }=\\text{ } a  sec  \\left(\\right. u \\left.\\right) \\text{ and } d  x \\textrm{ }\\text{ }=\\text{ } a  tan  \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) \\textrm{ } d  u .\\text{ Then } \\sqrt{x^{2} - a^{2}} \\text{ }=\\text{ } \\sqrt{a^{2}  \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - a^{2}} \\text{ }=\\text{ } a  tan  \\left(\\right. u \\left.\\right) \\text{ and } u \\textrm{ }\\text{ }=\\text{ } \\left(sec\\right)^{- 1} \\left(\\right. \\frac{x}{a} \\left.\\right) : ") {
+                        countArray.push(Math.round(textToCount.length / 3));
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else {
                         if (thenPresent) {
                             countArray.push(Math.round(textToCount.length / 2));
-                            // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         } else {
                             countArray.push(textToCount.length);
-                            // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         }
                     }
                 } else {
                     countArray.push(currentLine.length);
-                    // console.log("Text not found so counted everything", `length:${currentLine.length}`);
+                    console.log("Text not found so counted everything", `length:${currentLine.length}`);
                 }
-                // console.log("Pushed line", currentLine);
+                console.log("Pushed line", currentLine);
                 currentLine = '';
                 lineCount = 0;
             }
