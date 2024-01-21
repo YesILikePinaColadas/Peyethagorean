@@ -171,44 +171,44 @@ export class DataProcesser {
         return inputString;
 
     }
-    private processLeftRight(inputString: string): string {
-        // Define the main pattern
-        const mainPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\) .*?(?=[\\}])/;
-        const secondPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\)/;
+    // private processLeftRight(inputString: string): string {
+    //     // Define the main pattern
+    //     const mainPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\) .*?(?=[\\}])/;
+    //     const secondPattern = /\\left\(\\right\.\s*(\D*?)\\left\.\\right\)/;
 
-        // Perform the first regex test
-        const firstMatch = inputString.match(mainPattern);
+    //     // Perform the first regex test
+    //     const firstMatch = inputString.match(mainPattern);
 
-        if (!firstMatch) {
-            // If no match, return the original string
-            // console.log("Original string of this call will be returned", inputString);
-            return inputString;
-        }
+    //     if (!firstMatch) {
+    //         // If no match, return the original string
+    //         // console.log("Original string of this call will be returned", inputString);
+    //         return inputString;
+    //     }
 
-        // console.log(firstMatch)
+    //     // console.log(firstMatch)
 
-        // Divide the string into two parts
-        const firstPartMatch = firstMatch[0].match(secondPattern);
+    //     // Divide the string into two parts
+    //     const firstPartMatch = firstMatch[0].match(secondPattern);
 
-        if (!firstPartMatch) {
-            // console.log("There was no second pattern match", inputString);
-            return inputString;
-        }
+    //     if (!firstPartMatch) {
+    //         // console.log("There was no second pattern match", inputString);
+    //         return inputString;
+    //     }
 
-        const firstPart = firstMatch[0].substring(firstPartMatch[0].length);
+    //     const firstPart = firstMatch[0].substring(firstPartMatch[0].length);
 
-        // console.log(firstPart);
+    //     // console.log(firstPart);
 
-        // Create the new string
-        const newString = `\\left(\\right ${firstPart} \\left.\\right)`;
+    //     // Create the new string
+    //     const newString = `\\left(\\right ${firstPart} \\left.\\right)`;
 
-        // Concatenate the parts to get the final result
-        const result = inputString.replace(firstMatch[0], newString);
+    //     // Concatenate the parts to get the final result
+    //     const result = inputString.replace(firstMatch[0], newString);
 
-        console.log("final result of processing before calling again", result);
+    //     // console.log("final result of processing before calling again", result);
 
-        return this.processLeftRight(result);
-    }
+    //     return this.processLeftRight(result);
+    // }
 
     public createLineArrayFromLatex(inputString: string): ReturnObject {
         // Regex to match for counting characters:
@@ -225,7 +225,7 @@ export class DataProcesser {
         // Split the input string into an array of lines using double backslashes
         const lines = stringWithNormalSpaces.split(/(?<!&.{0,4})\\\\(?!.{0,4}&|\\begin\{matrix\}.{0,3}\s|.{0,18}\s.{0,3}\\end\{matrix\})/);
 
-        console.log(lines);
+        // console.log(lines);
 
         // Remove empty lines and trim leading/trailing whitespace from each line
         const cleanedLines = lines
@@ -276,32 +276,44 @@ export class DataProcesser {
                 }
 
                 // Counting text
-                console.log(doubleSeparatedLine);
+                // console.log(doubleSeparatedLine);
                 const textMatch = doubleSeparatedLine.match(countTextRegex);
                 if (textMatch && textMatch[1]) {
                     const textToCount = textMatch[1];
                     if (textToCount === "\\text{Therefore}: " || textToCount === "\\text{Which is equal to}: ") {
-                        countArray.push(textToCount.length * 4);
-                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                        countArray.push(Math.floor(textToCount.length * 4.5));
+                        // console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: ") {
                         countArray.push(textToCount.length - 40);
-                        console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                        // console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{Expand and collect in terms of powers of } x : ") {
+                        countArray.push(textToCount.length + 30);
+                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{The partial fraction expansion is of the form}: ") {
+                        countArray.push(textToCount.length + 10);
+                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{Then the partial fraction expansion is of the form}: ") {
+                        countArray.push(textToCount.length + 10);
+                        // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else {
                         if (thenPresent) {
                             countArray.push(textToCount.length / 2);
-                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                            // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         } else {
                             countArray.push(textToCount.length);
-                            console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                            // console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         }
                     }
                 } else {
                     countArray.push(currentLine.length);
-                    console.log("Text not found so counted everything", `length:${currentLine.length}`);
+                    // console.log("Text not found so counted everything", `length:${currentLine.length}`);
                 }
-                console.log("Pushed line", currentLine);
+                // console.log("Pushed line", currentLine);
                 currentLine = '';
                 lineCount = 0;
             }
@@ -311,13 +323,11 @@ export class DataProcesser {
             latexText: mergedLines,
             countArray: countArray,
         };
-
         return returnObject;
     }
-    private plainUnpack(xml: string, desiredAction: DesiredAction): string {
-        return this.extractFullSolution(this.xmlToObjectPlain(xml), desiredAction)
-    }
-
+    // private plainUnpack(xml: string, desiredAction: DesiredAction): string {
+    //     return this.extractFullSolution(this.xmlToObjectPlain(xml), desiredAction)
+    // }
     public fullMlUnpack(xmlMathml: string, desiredAction: DesiredAction): ReturnObject {
         return this.createLineArrayFromLatex(this.xmlFullMLToLatex(this.extractFullMLSolution(desiredAction, xmlMathml)));
     }

@@ -83,8 +83,8 @@ describe(testName, () => {
         it(
             `[GET] Get PARTIAL FRACTION Step by step solution (BOTH)`,
             async () => {
-                const desiredAction: DesiredAction = "integrate";
-                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "\\frac{1}{\\sqrt{a^2-x^2}}" }, desiredAction);
+                const desiredAction: DesiredAction = "partial+fractions+";
+                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "\\frac{4x^3+3x^2-2x+1}{x^4-3x^3+x^2+3x-2}" }, desiredAction);
                 // console.log(responseMathML);
                 const fullyUnpacked = processer.fullMlUnpack(responseMathML, desiredAction);
                 fs.writeFileSync(filePath, fullyUnpacked.latexText.toString());
