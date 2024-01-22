@@ -297,6 +297,10 @@ export class DataProcesser {
                         countArray.push(textToCount.length + 10);
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
+                    else if (textToCount === "\\text{Take the integral}: ") {
+                        countArray.push(textToCount.length + 5);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
                     else if (
                         textToCount === "\\text{Use the reduction formula},\\text{ } \\int \\left(sec\\right)^{m} \\left(\\right. u \\left.\\right)  d  u \\text{ }=\\text{ } \\frac{sin  \\left(\\right. u \\left.\\right)  \\left(sec\\right)^{m - 1} \\left(\\right. u \\left.\\right)}{m - 1} \\text{ }+\\text{ } \\frac{m - 2}{m - 1} \\int \\left(sec\\right)^{- 2 + m} \\left(\\right. u \\left.\\right)  d  u ,\\text{ where } m \\textrm{ }\\text{ }=\\text{ } 3 : " ||
                         textToCount === "\\text{For the integrand } \\frac{\\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)  tan  \\left(\\right. u \\left.\\right)}{sec  \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)} ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right) \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) \\left.\\right) \\textrm{ } d  u : " ||
@@ -304,7 +308,8 @@ export class DataProcesser {
                         textToCount === "\\text{Expanding the integrand } sec  \\left(\\right. u \\left.\\right)  \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - 1 \\left.\\right) \\text{ gives } \\left(sec\\right)^{3} \\left(\\right. u \\left.\\right) - sec  \\left(\\right. u \\left.\\right) : " ||
                         textToCount === "\\text{Multiply numerator and denominator of } \\frac{1}{1 - \\left(sin\\right)^{4} \\left(\\right. x \\left.\\right)} \\text{ by } \\left(sec\\right)^{4} \\left(\\right. x \\left.\\right)   : " ||
                         textToCount === "\\text{For the integrand } \\frac{u^{2} + 1}{2  u^{2} + 1} ,\\text{ do long division}: " ||
-                        textToCount === "\\text{The integral of } \\frac{1}{s^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. s \\left.\\right) : "
+                        textToCount === "\\text{The integral of } \\frac{1}{s^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. s \\left.\\right) : " ||
+                        textToCount === "\\text{For the integrand } \\left(\\right. 8  x - 12 \\left.\\right)  \\left(\\left(\\right. 4  x^{2} - 12  x \\left.\\right)\\right)^{4} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} - 12  x \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x - 12 \\left.\\right) \\textrm{ } d  x : "
                     ) {
                         countArray.push(Math.round(textToCount.length / 2));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
