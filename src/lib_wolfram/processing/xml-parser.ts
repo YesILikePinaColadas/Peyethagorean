@@ -304,7 +304,6 @@ export class DataProcesser {
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else if (
-                        textToCount === "\\text{Use the reduction formula},\\text{ } \\int \\left(sec\\right)^{m} \\left(\\right. u \\left.\\right)  d  u \\text{ }=\\text{ } \\frac{sin  \\left(\\right. u \\left.\\right)  \\left(sec\\right)^{m - 1} \\left(\\right. u \\left.\\right)}{m - 1} \\text{ }+\\text{ } \\frac{m - 2}{m - 1} \\int \\left(sec\\right)^{- 2 + m} \\left(\\right. u \\left.\\right)  d  u ,\\text{ where } m \\textrm{ }\\text{ }=\\text{ } 3 : " ||
                         textToCount === "\\text{For the integrand } \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) ,\\text{ write } \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right) \\text{ as } \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - 1 : " ||
                         textToCount === "\\text{Expanding the integrand } sec  \\left(\\right. u \\left.\\right)  \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) - 1 \\left.\\right) \\text{ gives } \\left(sec\\right)^{3} \\left(\\right. u \\left.\\right) - sec  \\left(\\right. u \\left.\\right) : " ||
                         textToCount === "\\text{Multiply numerator and denominator of } \\frac{1}{1 - \\left(sin\\right)^{4} \\left(\\right. x \\left.\\right)} \\text{ by } \\left(sec\\right)^{4} \\left(\\right. x \\left.\\right)   : " ||
@@ -315,19 +314,27 @@ export class DataProcesser {
                         textToCount === "\\text{For the integrand } \\frac{5  x + 2}{5  x^{2} + 4  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 5  x^{2} + 4  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 10  x + 4 \\left.\\right) \\textrm{ } d  x : " ||
                         textToCount === "\\text{For the integrand } \\frac{1}{\\sqrt{1 - \\frac{9  x^{2}}{4}}} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } \\frac{3  x}{2} \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\frac{3}{2} \\textrm{ } d  x : " ||
                         textToCount === "\\text{Substitute back for } u \\textrm{ }\\text{ }=\\text{ } \\left(sin\\right)^{- 1} \\left(\\right. \\frac{x}{a} \\left.\\right) : " ||
+                        textToCount === "\\text{Substitute back for } s \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right) : " ||
                         textToCount === "\\text{Write } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right) \\text{ as } \\frac{1}{2}  cos  \\left(\\right. 2  u \\left.\\right) + \\frac{1}{2} : " ||
                         textToCount === "\\text{For the integrand } cos  \\left(\\right. 2  u \\left.\\right) ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } 2  u \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } 2 \\textrm{ } d  u : " ||
                         textToCount === "\\text{The integral of } cos  \\left(\\right. s \\left.\\right) \\text{ is } sin  \\left(\\right. s \\left.\\right) : " ||
                         textToCount === "\\text{Apply the double angle formula } sin  \\left(\\right. 2  u \\left.\\right) \\textrm{ }\\text{ }=\\text{ } 2  sin  \\left(\\right. u \\left.\\right)  cos  \\left(\\right. u \\left.\\right)   : " ||
                         textToCount === "\\text{Express } cos  \\left(\\right. u \\left.\\right) \\text{ in terms of } sin  \\left(\\right. u \\left.\\right) \\text{ using } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right) \\textrm{ }\\text{ }=\\text{ } 1 - \\left(sin\\right)^{2} \\left(\\right. u \\left.\\right)   : " ||
                         textToCount === "\\text{For the integrand } \\frac{1}{\\frac{x^{2}}{a^{2}} + 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } \\frac{x}{a} \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\frac{1}{a} \\textrm{ } d  x : " ||
-                        textToCount === "\\text{The integral of } \\frac{1}{u^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. u \\left.\\right) : "
+                        textToCount === "\\text{The integral of } \\frac{1}{u^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. u \\left.\\right) : " ||
+                        textToCount === "\\text{For the integrand } \\frac{1}{1 - \\frac{s^{2}}{2}} ,\\text{ substitute } p \\textrm{ }\\text{ }=\\text{ } \\frac{s}{\\sqrt{2}} \\text{ and } d  p \\textrm{ }\\text{ }=\\text{ } \\frac{1}{\\sqrt{2}} \\textrm{ } d  s : " ||
+                        textToCount === "\\text{Simplify using } sin  \\left(\\right. \\left(sec\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } \\sqrt{1 - \\frac{1}{z^{2}}} : " ||
+                        textToCount === "\\text{The integral of } \\frac{1}{1 - p^{2}} \\text{ is } \\left(tanh\\right)^{- 1} \\left(\\right. p \\left.\\right) : "
                     ) {
                         countArray.push(Math.round(textToCount.length / 2.1));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Factor the answer a different way}: ") {
-                        countArray.push(textToCount.length + 15);
+                        countArray.push(textToCount.length + 20);
+                        console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
+                    }
+                    else if (textToCount === "\\text{Use the reduction formula},\\text{ } \\int \\left(sec\\right)^{m} \\left(\\right. u \\left.\\right)  d  u \\text{ }=\\text{ } \\frac{sin  \\left(\\right. u \\left.\\right)  \\left(sec\\right)^{m - 1} \\left(\\right. u \\left.\\right)}{m - 1} \\text{ }+\\text{ } \\frac{m - 2}{m - 1} \\int \\left(sec\\right)^{- 2 + m} \\left(\\right. u \\left.\\right)  d  u ,\\text{ where } m \\textrm{ }\\text{ }=\\text{ } 3 : ") {
+                        countArray.push(Math.round(textToCount.length / 2.5));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{For the integrand } \\sqrt{a^{2} + x^{2}} ,\\text{ }(\\text{assuming all variables are positive})\\text{ substitute } x \\textrm{ }\\text{ }=\\text{ } a  tan  \\left(\\right. u \\left.\\right) \\text{ and } d  x \\textrm{ }\\text{ }=\\text{ } a  \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) \\textrm{ } d  u .\\text{ Then } \\sqrt{a^{2} + x^{2}} \\text{ }=\\text{ } \\sqrt{a^{2}  \\left(tan\\right)^{2} \\left(\\right. u \\left.\\right) + a^{2}} \\text{ }=\\text{ } a  sec  \\left(\\right. u \\left.\\right) \\text{ and } u \\textrm{ }\\text{ }=\\text{ } \\left(tan\\right)^{- 1} \\left(\\right. \\frac{x}{a} \\left.\\right) : " ||
@@ -335,13 +342,17 @@ export class DataProcesser {
                         textToCount === "\\text{Prepare to substitute } u \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. x \\left.\\right) .\\text{ Rewrite } \\frac{\\left(sec\\right)^{4} \\left(\\right. x \\left.\\right)}{\\left(sec\\right)^{4} \\left(\\right. x \\left.\\right) - \\left(tan\\right)^{4} \\left(\\right. x \\left.\\right)} \\text{ using } \\left(sec\\right)^{2} \\left(\\right. x \\left.\\right) \\textrm{ }\\text{ }=\\text{ } \\left(tan\\right)^{2} \\left(\\right. x \\left.\\right) + 1   : " ||
                         textToCount === "\\text{For the integrand } \\frac{\\left(\\right. 1 + \\left(tan\\right)^{2} \\left(\\right. x \\left.\\right) \\left.\\right)  \\left(sec\\right)^{2} \\left(\\right. x \\left.\\right)}{1 + 2  \\left(tan\\right)^{2} \\left(\\right. x \\left.\\right)} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. x \\left.\\right) \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(sec\\right)^{2} \\left(\\right. x \\left.\\right) \\textrm{ } d  x : " ||
                         textToCount === "\\text{For the integrand } \\frac{\\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)  tan  \\left(\\right. u \\left.\\right)}{sec  \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)} ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right) \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } \\left(\\right. \\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + tan  \\left(\\right. u \\left.\\right)  sec  \\left(\\right. u \\left.\\right) \\left.\\right) \\textrm{ } d  u : " ||
-                        textToCount === "\\text{Simplify using } sec  \\left(\\right. \\left(tan\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } \\sqrt{z^{2} + 1} \\text{ and } tan  \\left(\\right. \\left(tan\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } z : ") {
-                        countArray.push(Math.round(textToCount.length / 3));
+                        textToCount === "\\text{Simplify using } sec  \\left(\\right. \\left(tan\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } \\sqrt{z^{2} + 1} \\text{ and } tan  \\left(\\right. \\left(tan\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } z : " ||
+                        textToCount === "\\text{Simplify using } sec  \\left(\\right. \\left(sec\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } z \\text{ and } tan  \\left(\\right. \\left(sec\\right)^{- 1} \\left(\\right. z \\left.\\right) \\left.\\right) \\textrm{ }\\text{ }=\\text{ } \\sqrt{1 - \\frac{1}{z^{2}}}  z : " ||
+                        textToCount === "\\text{Multiply numerator and denominator of } \\frac{sec  \\left(\\right. u \\left.\\right)}{\\left(sec\\right)^{2} \\left(\\right. u \\left.\\right) + 1} \\text{ by } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right)   : " ||
+                        textToCount === "\\text{Prepare to substitute } s \\textrm{ }\\text{ }=\\text{ } sin  \\left(\\right. u \\left.\\right) .\\text{ Rewrite } \\frac{cos  \\left(\\right. u \\left.\\right)}{1 + \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right)} \\text{ using } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right) \\textrm{ }\\text{ }=\\text{ } 1 - \\left(sin\\right)^{2} \\left(\\right. u \\left.\\right)   : " ||
+                        textToCount === "\\text{For the integrand } \\frac{cos  \\left(\\right. u \\left.\\right)}{2 - \\left(sin\\right)^{2} \\left(\\right. u \\left.\\right)} ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } sin  \\left(\\right. u \\left.\\right) \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } cos  \\left(\\right. u \\left.\\right) \\textrm{ } d  u : ") {
+                        countArray.push(Math.round(textToCount.length / 3.1));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                     }
                     else {
                         if (thenPresent) {
-                            countArray.push(Math.round(textToCount.length / 2.7));
+                            countArray.push(Math.round(textToCount.length / 2.8));
                             console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         } else {
                             countArray.push(textToCount.length);
