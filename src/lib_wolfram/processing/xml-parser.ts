@@ -286,7 +286,8 @@ export class DataProcesser {
                     }
                     else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: " ||
                         textToCount === "\\text{Multiply numerator and denominator of } sec  \\left(\\right. u \\left.\\right) \\text{ by } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)   : " ||
-                        textToCount === "\\text{The integral of } \\frac{1}{u} \\text{ is } log  \\left(\\right. u \\left.\\right) : ") {
+                        textToCount === "\\text{The integral of } \\frac{1}{u} \\text{ is } log  \\left(\\right. u \\left.\\right) : " ||
+                        textToCount === "\\text{The integral of } \\frac{1}{\\sqrt{1 - u^{2}}} \\text{ is } \\left(sin\\right)^{- 1} \\left(\\right. u \\left.\\right) : ") {
                         countArray.push(textToCount.length - 40);
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
@@ -312,7 +313,14 @@ export class DataProcesser {
                         textToCount === "\\text{The integral of } \\frac{1}{s^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. s \\left.\\right) : " ||
                         textToCount === "\\text{For the integrand } \\left(\\right. 8  x - 12 \\left.\\right)  \\left(\\left(\\right. 4  x^{2} - 12  x \\left.\\right)\\right)^{4} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} - 12  x \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x - 12 \\left.\\right) \\textrm{ } d  x : " ||
                         textToCount === "\\text{For the integrand } \\frac{4  x + 3}{4  x^{2} + 6  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} + 6  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x + 6 \\left.\\right) \\textrm{ } d  x : " ||
-                        textToCount === "\\text{For the integrand } \\frac{5  x + 2}{5  x^{2} + 4  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 5  x^{2} + 4  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 10  x + 4 \\left.\\right) \\textrm{ } d  x : "
+                        textToCount === "\\text{For the integrand } \\frac{5  x + 2}{5  x^{2} + 4  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 5  x^{2} + 4  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 10  x + 4 \\left.\\right) \\textrm{ } d  x : " ||
+                        textToCount === "\\text{For the integrand } \\frac{1}{\\sqrt{1 - \\frac{9  x^{2}}{4}}} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } \\frac{3  x}{2} \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\frac{3}{2} \\textrm{ } d  x : " ||
+                        textToCount === "\\text{Substitute back for } u \\textrm{ }\\text{ }=\\text{ } \\left(sin\\right)^{- 1} \\left(\\right. \\frac{x}{a} \\left.\\right) : " ||
+                        textToCount === "\\text{Write } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right) \\text{ as } \\frac{1}{2}  cos  \\left(\\right. 2  u \\left.\\right) + \\frac{1}{2} : " ||
+                        textToCount === "\\text{For the integrand } cos  \\left(\\right. 2  u \\left.\\right) ,\\text{ substitute } s \\textrm{ }\\text{ }=\\text{ } 2  u \\text{ and } d  s \\textrm{ }\\text{ }=\\text{ } 2 \\textrm{ } d  u : " ||
+                        textToCount === "\\text{The integral of } cos  \\left(\\right. s \\left.\\right) \\text{ is } sin  \\left(\\right. s \\left.\\right) : " ||
+                        textToCount === "\\text{Apply the double angle formula } sin  \\left(\\right. 2  u \\left.\\right) \\textrm{ }\\text{ }=\\text{ } 2  sin  \\left(\\right. u \\left.\\right)  cos  \\left(\\right. u \\left.\\right)   : " ||
+                        textToCount === "\\text{Express } cos  \\left(\\right. u \\left.\\right) \\text{ in terms of } sin  \\left(\\right. u \\left.\\right) \\text{ using } \\left(cos\\right)^{2} \\left(\\right. u \\left.\\right) \\textrm{ }\\text{ }=\\text{ } 1 - \\left(sin\\right)^{2} \\left(\\right. u \\left.\\right)   : "
                     ) {
                         countArray.push(Math.round(textToCount.length / 2));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
@@ -330,7 +338,7 @@ export class DataProcesser {
                     }
                     else {
                         if (thenPresent) {
-                            countArray.push(Math.round(textToCount.length / 2));
+                            countArray.push(Math.round(textToCount.length / 2.5));
                             console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
                         } else {
                             countArray.push(textToCount.length);
