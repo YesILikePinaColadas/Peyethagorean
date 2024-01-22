@@ -84,7 +84,7 @@ describe(testName, () => {
             `[GET] Get PARTIAL FRACTION Step by step solution (BOTH)`,
             async () => {
                 const desiredAction: DesiredAction = "integrate";
-                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "(8x-12)(4x^2-12x)^4" }, desiredAction);
+                const responseMathML = await apiFull.getStepByStepSolutionMathML({ equation: "\\frac{5x+2}{5x^2+4x-1}" }, desiredAction);
                 // console.log(responseMathML);
                 const fullyUnpacked = processer.fullMlUnpack(responseMathML, desiredAction);
                 fs.writeFileSync(filePath, fullyUnpacked.latexText.toString());

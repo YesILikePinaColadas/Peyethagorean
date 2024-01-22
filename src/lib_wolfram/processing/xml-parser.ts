@@ -285,7 +285,8 @@ export class DataProcesser {
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
                     else if (textToCount === "\\text{Multiply both sides by } \\left(\\right. x - 2 \\left.\\right)  \\left(\\right. x + 2 \\left.\\right) \\text{ and simplify}: " ||
-                        textToCount === "\\text{Multiply numerator and denominator of } sec  \\left(\\right. u \\left.\\right) \\text{ by } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)   : ") {
+                        textToCount === "\\text{Multiply numerator and denominator of } sec  \\left(\\right. u \\left.\\right) \\text{ by } tan  \\left(\\right. u \\left.\\right) + sec  \\left(\\right. u \\left.\\right)   : " ||
+                        textToCount === "\\text{The integral of } \\frac{1}{u} \\text{ is } log  \\left(\\right. u \\left.\\right) : ") {
                         countArray.push(textToCount.length - 40);
                         console.log("Found text and counted length, but double cause it was therefore", textToCount, `length:${textToCount.length}`);
                     }
@@ -309,7 +310,9 @@ export class DataProcesser {
                         textToCount === "\\text{Multiply numerator and denominator of } \\frac{1}{1 - \\left(sin\\right)^{4} \\left(\\right. x \\left.\\right)} \\text{ by } \\left(sec\\right)^{4} \\left(\\right. x \\left.\\right)   : " ||
                         textToCount === "\\text{For the integrand } \\frac{u^{2} + 1}{2  u^{2} + 1} ,\\text{ do long division}: " ||
                         textToCount === "\\text{The integral of } \\frac{1}{s^{2} + 1} \\text{ is } \\left(tan\\right)^{- 1} \\left(\\right. s \\left.\\right) : " ||
-                        textToCount === "\\text{For the integrand } \\left(\\right. 8  x - 12 \\left.\\right)  \\left(\\left(\\right. 4  x^{2} - 12  x \\left.\\right)\\right)^{4} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} - 12  x \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x - 12 \\left.\\right) \\textrm{ } d  x : "
+                        textToCount === "\\text{For the integrand } \\left(\\right. 8  x - 12 \\left.\\right)  \\left(\\left(\\right. 4  x^{2} - 12  x \\left.\\right)\\right)^{4} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} - 12  x \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x - 12 \\left.\\right) \\textrm{ } d  x : " ||
+                        textToCount === "\\text{For the integrand } \\frac{4  x + 3}{4  x^{2} + 6  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 4  x^{2} + 6  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 8  x + 6 \\left.\\right) \\textrm{ } d  x : " ||
+                        textToCount === "\\text{For the integrand } \\frac{5  x + 2}{5  x^{2} + 4  x - 1} ,\\text{ substitute } u \\textrm{ }\\text{ }=\\text{ } 5  x^{2} + 4  x - 1 \\text{ and } d  u \\textrm{ }\\text{ }=\\text{ } \\left(\\right. 10  x + 4 \\left.\\right) \\textrm{ } d  x : "
                     ) {
                         countArray.push(Math.round(textToCount.length / 2));
                         console.log("Found text and counted length", textToCount, `length:${textToCount.length}`);
